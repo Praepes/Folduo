@@ -63,7 +63,7 @@ public final class MainActivity extends Activity {
     private void startMotion(){
         if(!Settings.canDrawOverlays(this)){Toast.makeText(this,getString(R.string.need_overlay),Toast.LENGTH_LONG).show();return;}
         if(!BridgeConnection.permitted()){Toast.makeText(this,getString(R.string.need_shizuku),Toast.LENGTH_LONG).show();return;}
-        if(!"SM-F966Z".equals(Build.MODEL)){Toast.makeText(this,getString(R.string.unsupported_device),Toast.LENGTH_LONG).show();return;}
+        if(!DeviceCompat.isSupported()){Toast.makeText(this,getString(R.string.unsupported_device),Toast.LENGTH_LONG).show();return;}
         if(checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)!=android.content.pm.PackageManager.PERMISSION_GRANTED)requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS},8);
         BridgeConnection.connect(this);MotionSettings.setEnabled(this,true);startForegroundService(new Intent(this,MotionService.class).setAction(MotionService.running?"restart":"start"));
         Toast.makeText(this,getString(R.string.close_to_prepare),Toast.LENGTH_LONG).show();finish();
@@ -112,14 +112,18 @@ public final class MainActivity extends Activity {
     private String languageName(){
         LocaleList locales=getSystemService(LocaleManager.class).getApplicationLocales();
         if(locales.isEmpty())return getString(R.string.language_system);
-        return getString("ja".equals(locales.get(0).getLanguage())?R.string.language_japanese:R.string.language_english);
+        String lang=locales.get(0).getLanguage();
+        if("ja".equals(lang))return getString(R.string.language_japanese);
+        if("zh".equals(lang))return getString(R.string.language_chinese);
+        return getString(R.string.language_english);
     }
     private void chooseLanguage(){
         LocaleManager manager=getSystemService(LocaleManager.class);LocaleList locales=manager.getApplicationLocales();
-        int selected=locales.isEmpty()?0:("ja".equals(locales.get(0).getLanguage())?2:1);
-        String[] names={getString(R.string.language_system),getString(R.string.language_english),getString(R.string.language_japanese)};
+        String lang=locales.isEmpty()?"":locales.get(0).getLanguage();
+        int selected=locales.isEmpty()?0:("ja".equals(lang)?2:("zh".equals(lang)?3:1));
+        String[] names={getString(R.string.language_system),getString(R.string.language_english),getString(R.string.language_japanese),getString(R.string.language_chinese)};
         new AlertDialog.Builder(this).setTitle(R.string.language_title).setSingleChoiceItems(names,selected,(dialog,index)->{
-            dialog.dismiss();String tags=new String[]{"","en","ja"}[index];
+            dialog.dismiss();String tags=new String[]{"","en","ja","zh"}[index];
             if(!manager.getApplicationLocales().toLanguageTags().equals(tags))manager.setApplicationLocales(LocaleList.forLanguageTags(tags));
         }).setNegativeButton(R.string.close,null).show();
     }
