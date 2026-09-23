@@ -200,4 +200,16 @@
     <string name="wifi_adb_connect_failed">Connection failed: %1$s</string>
     <string name="wifi_adb_mdns_fail">Could not start service discovery.</string>
     <string name="wifi_adb_button">Start Shizuku via WiFi (no PC)</string>
+    <string name="wallpaper_title">Wallpaper setup</string>
+    <string name="wallpaper_body">Fine-grained hinge angles require Samsung's stock interactive wallpaper. Use the buttons below to check and apply it automatically.</string>
+    <string name="wallpaper_check">Check wallpaper status</string>
+    <string name="wallpaper_apply">Apply required wallpaper</string>
+    <string name="wallpaper_inner_ok">Inner wallpaper: ✓ Correct</string>
+    <string name="wallpaper_inner_missing">Inner wallpaper: ✗ Not detected</string>
+    <string name="wallpaper_cover_ok">Cover wallpaper: ✓ Correct</string>
+    <string name="wallpaper_cover_missing">Cover wallpaper: ✗ Not detected</string>
+    <string name="wallpaper_all_ok">All wallpapers are correctly configured.</string>
+    <string name="wallpaper_applying">Applying wallpapers…</string>
+    <string name="wallpaper_applied">Wallpapers applied. Check status to verify.</string>
+    <string name="wallpaper_failed">Wallpaper setup failed: %1$s</string>
 </resources>

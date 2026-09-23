@@ -44,6 +44,10 @@ public final class MainActivity extends Activity {
             if(BridgeConnection.permitted())BridgeConnection.connect(this);else Shizuku.requestPermission(7);
         });
         button(page,getString(R.string.wifi_adb_button),()->startActivity(new Intent(this,WifiAdbActivity.class)));
+        label(page,getString(R.string.wallpaper_title),21,Color.WHITE);
+        label(page,getString(R.string.wallpaper_body),14,0xffc5d3cd);
+        button(page,getString(R.string.wallpaper_check),this::checkWallpaper);
+        button(page,getString(R.string.wallpaper_apply),this::applyWallpaper);
         button(page,getString(R.string.allow_overlay),()->startActivity(new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,Uri.parse("package:"+getPackageName()))));
         label(page,getString(R.string.screen_access_title),21,Color.WHITE);
         label(page,getString(R.string.screen_access_body),14,0xffc5d3cd);
@@ -109,6 +113,35 @@ public final class MainActivity extends Activity {
                 }catch(Exception error){handler.post(()->{if(!isDestroyed())Toast.makeText(this,UiText.error(error).resolve(this),Toast.LENGTH_LONG).show();});}
             });
         }else startActivity(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME).setComponent(new ComponentName(this,HomeActivity.class)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+    }
+    private void checkWallpaper(){
+        IShellBridge bridge=BridgeConnection.bridge;
+        if(bridge==null){Toast.makeText(this,getString(R.string.need_shizuku),Toast.LENGTH_SHORT).show();return;}
+        BridgeConnection.work.execute(()->{
+            Bundle result=WallpaperHelper.checkStatus(bridge);
+            handler.post(()->{
+                if(isDestroyed())return;
+                StringBuilder sb=new StringBuilder();
+                sb.append(result.getBoolean("innerOk")?getString(R.string.wallpaper_inner_ok):getString(R.string.wallpaper_inner_missing)).append('\n');
+                sb.append(result.getBoolean("coverOk")?getString(R.string.wallpaper_cover_ok):getString(R.string.wallpaper_cover_missing));
+                if(result.getBoolean("allOk"))sb.append('\n').append(getString(R.string.wallpaper_all_ok));
+                new AlertDialog.Builder(this).setMessage(sb).setPositiveButton(getString(R.string.close),null).show();
+            });
+        });
+    }
+    private void applyWallpaper(){
+        IShellBridge bridge=BridgeConnection.bridge;
+        if(bridge==null){Toast.makeText(this,getString(R.string.need_shizuku),Toast.LENGTH_SHORT).show();return;}
+        Toast.makeText(this,getString(R.string.wallpaper_applying),Toast.LENGTH_SHORT).show();
+        BridgeConnection.work.execute(()->{
+            Bundle inner=WallpaperHelper.applyInner();
+            Bundle cover=WallpaperHelper.applyCover();
+            handler.post(()->{
+                if(isDestroyed())return;
+                if(inner.getBoolean("ok")&&cover.getBoolean("ok"))Toast.makeText(this,getString(R.string.wallpaper_applied),Toast.LENGTH_LONG).show();
+                else Toast.makeText(this,getString(R.string.wallpaper_failed,inner.getString("error",cover.getString("error",""))),Toast.LENGTH_LONG).show();
+            });
+        });
     }
     private String languageName(){
         LocaleList locales=getSystemService(LocaleManager.class).getApplicationLocales();

@@ -199,4 +199,16 @@
     <string name="wifi_adb_connect_failed">接続に失敗: %1$s</string>
     <string name="wifi_adb_mdns_fail">サービス検出を開始できませんでした</string>
     <string name="wifi_adb_button">WiFiでShizukuを起動（PC不要）</string>
+    <string name="wallpaper_title">壁紙の設定</string>
+    <string name="wallpaper_body">細かな角度にはSamsung純正の動く壁紙が必要です。下のボタンで確認・自動適用できます。</string>
+    <string name="wallpaper_check">壁紙の状態を確認</string>
+    <string name="wallpaper_apply">必要な壁紙を適用</string>
+    <string name="wallpaper_inner_ok">内側の壁紙: ✓ 正常</string>
+    <string name="wallpaper_inner_missing">内側の壁紙: ✗ 未検出</string>
+    <string name="wallpaper_cover_ok">外側の壁紙: ✓ 正常</string>
+    <string name="wallpaper_cover_missing">外側の壁紙: ✗ 未検出</string>
+    <string name="wallpaper_all_ok">すべての壁紙が正しく設定されています</string>
+    <string name="wallpaper_applying">壁紙を適用中…</string>
+    <string name="wallpaper_applied">壁紙を適用しました。状態を確認してください。</string>
+    <string name="wallpaper_failed">壁紙の設定に失敗: %1$s</string>
 </resources>

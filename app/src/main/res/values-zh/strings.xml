@@ -207,4 +207,16 @@
     <string name="wifi_adb_connect_failed">连接失败：%1$s</string>
     <string name="wifi_adb_mdns_fail">无法启动服务发现</string>
     <string name="wifi_adb_button">通过 WiFi 启动 Shizuku（无需电脑）</string>
+    <string name="wallpaper_title">壁纸设置</string>
+    <string name="wallpaper_body">精细角度需要三星原生动态壁纸。使用下方按钮检查并自动应用。</string>
+    <string name="wallpaper_check">检查壁纸状态</string>
+    <string name="wallpaper_apply">应用所需壁纸</string>
+    <string name="wallpaper_inner_ok">内屏壁纸：✓ 正确</string>
+    <string name="wallpaper_inner_missing">内屏壁纸：✗ 未检测到</string>
+    <string name="wallpaper_cover_ok">外屏壁纸：✓ 正确</string>
+    <string name="wallpaper_cover_missing">外屏壁纸：✗ 未检测到</string>
+    <string name="wallpaper_all_ok">所有壁纸已正确配置</string>
+    <string name="wallpaper_applying">正在应用壁纸……</string>
+    <string name="wallpaper_applied">壁纸已应用。请检查状态以确认。</string>
+    <string name="wallpaper_failed">壁纸设置失败：%1$s</string>
 </resources>
