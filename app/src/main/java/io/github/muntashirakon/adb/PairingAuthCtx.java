@@ -18,7 +18,7 @@ import javax.security.auth.Destroyable;
 import io.github.muntashirakon.crypto.spake2.Spake2Context;
 import io.github.muntashirakon.crypto.spake2.Spake2Role;
 
-import com.example.f9660root.adb.CryptoCompat;
+import jp.bunkaich.sukashimotion.adb.CryptoCompat;
 
 @RequiresApi(Build.VERSION_CODES.GINGERBREAD)
 class PairingAuthCtx implements Destroyable {

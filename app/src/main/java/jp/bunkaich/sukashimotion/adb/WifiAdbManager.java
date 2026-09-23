@@ -88,7 +88,7 @@ public final class WifiAdbManager {
         try {
             byte[] buf = new byte[4096];
             int n;
-            while ((n = stream.read(buf)) >= 0) out.write(buf, 0, n);
+            while ((n = stream.read(buf, 0, buf.length)) >= 0) out.write(buf, 0, n);
         } finally { stream.close(); }
         return out.toString("UTF-8").trim();
     }
