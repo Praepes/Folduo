@@ -43,6 +43,7 @@ public final class MainActivity extends Activity {
             if(!Shizuku.pingBinder()){new AlertDialog.Builder(this).setMessage(getString(R.string.shizuku_not_running)).setPositiveButton(getString(R.string.official_guide),(d,w)->startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("https://shizuku.rikka.app/guide/setup/")))).setNegativeButton(getString(R.string.close),null).show();return;}
             if(BridgeConnection.permitted())BridgeConnection.connect(this);else Shizuku.requestPermission(7);
         });
+        button(page,getString(R.string.wifi_adb_button),()->startActivity(new Intent(this,WifiAdbActivity.class)));
         button(page,getString(R.string.allow_overlay),()->startActivity(new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,Uri.parse("package:"+getPackageName()))));
         label(page,getString(R.string.screen_access_title),21,Color.WHITE);
         label(page,getString(R.string.screen_access_body),14,0xffc5d3cd);
