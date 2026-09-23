@@ -28,5 +28,10 @@ final class FoldPolicy {
         // Easing this value accelerates the blur in the middle of a slow fold.
         return Math.max(0,Math.min(1,x));
     }
-    static float smooth(float value,float target,float seconds){return target+(value-target)*(float)Math.exp(-Math.min(.1,Math.max(0,seconds))/.024);}
+    static float smooth(float value,float target,float seconds){
+        // Tighter exponential decay for snappier response, closer to iPhone Duo's
+        // immediate optical tracking. The previous 24ms time constant lagged
+        // behind fast folds; 18ms tracks the physical hinge more faithfully.
+        return target+(value-target)*(float)Math.exp(-Math.min(.1,Math.max(0,seconds))/.018);
+    }
 }

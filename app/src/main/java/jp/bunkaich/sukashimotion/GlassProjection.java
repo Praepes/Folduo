@@ -11,7 +11,9 @@ final class GlassProjection {
     record Point(float x,float y) {}
     static Pose coverPose(float angle){
         float t=Math.min(1,clamp(angle)/90);t=t*t*(3-2*t);
-        return new Pose(.39f*t,.144f*t);
+        // Slightly stronger expansion gives more pronounced perspective compression
+        // at the far edge, closer to a real frosted glass pane tilting away.
+        return new Pose(.42f*t,.155f*t);
     }
     static Plane innerPlane(float angle){
         // Hold the vertical compensation below 90 degrees, where this face is hidden.

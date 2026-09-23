@@ -65,6 +65,13 @@ final class FoldShader {
             // image must not impose a sudden blur floor or change optical strength.
             half4 color=frost(q,radius);
             if(inner<.5 && rearBlend>0.0)color=mix(color,rearFrost(q,radius),half(rearBlend));
+            // Distance-dependent dimming: simulate light absorption through the
+            // frosted glass pane. Regions farther from the source plane darken
+            // progressively, mimicking the iPhone Duo optical depth effect.
+            // The dimming follows a gentle cubic curve so the hinge stays bright
+            // and only the far edge noticeably darkens.
+            float dimming = 1.0 - 0.35 * amount * distance * distance * distance;
+            color.rgb *= half(dimming);
             // Blur the displaced top/bottom silhouette in IMAGE space, including its
             // black surround. Alpha stays opaque: this is optical softness, not a hole
             // through which the real, unblurred app can show. No hinge corner is added.
